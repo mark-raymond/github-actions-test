@@ -1,0 +1,10 @@
+name: Docker
+on: push
+jobs:
+  hello-world:
+    name: Docker build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build image
+        run: docker build . -f Dockerfile -t github-actions-test
