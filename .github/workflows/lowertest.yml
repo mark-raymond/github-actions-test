@@ -1,0 +1,13 @@
+name: Lower test
+on: push
+jobs:
+  hello-world:
+    name: Lower test ${{ matrix.thing }}
+    strategy:
+      matrix:
+        thing: [lowercase, UPPERCASE]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Echo
+        run: echo "Lowercase thing is ${{ matrix.thing | lower }}"
