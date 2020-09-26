@@ -5,9 +5,18 @@ jobs:
     name: Lower test ${{ matrix.thing }}
     strategy:
       matrix:
-        thing: [lowercase, UPPERCASE]
+        thing: [Ubuntu Xenial, Debian Buster]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Echo
-        run: echo "Lowercase thing is ${{ matrix.thing | lower }}"
+      - name: Set variables
+        run: |
+          read -ra arr <<< "${{ matrix.thing }}"
+          echo "::set-env name=OS::$(tr '[:upper:]' '[:lower:]' <<< "${arr[0]}")"
+          echo "::set-env name=RELEASE::$(tr '[:upper:]' '[:lower:]' <<< "${arr[1]}")"
+          echo "OS = $OS"
+          echo "RELEASE = $RELEASE"
+      - name: Read variables
+        run: |
+          echo "OS = $OS"
+          echo "RELEASE = $RELEASE"
